@@ -1,5 +1,12 @@
 rootProject.name = "java_prof_otus_2024"
-include("HW01-gradle")
+
+include("L01-gradle")
+
+include("L02-gradle2")
+include("L02-gradle2-libApi")
+include("L02-gradle2-libApiUse")
+include("L02-logging")
+include("L03-generics")
 
 pluginManagement {
     val jgitver: String by settings
@@ -22,8 +29,3 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-include("L01-gradle")
-include("L02-module2")
-include("L02-gradle2")
-include("L02-gradle2-libApi")
-include("L02-logging")
