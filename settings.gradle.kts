@@ -29,3 +29,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("L04-qa")
