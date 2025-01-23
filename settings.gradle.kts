@@ -30,3 +30,4 @@ pluginManagement {
     }
 }
 include("L04-qa")
+include("L05-collections")
