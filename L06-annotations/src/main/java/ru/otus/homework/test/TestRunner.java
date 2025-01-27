@@ -15,7 +15,7 @@ import ru.otus.homework.annotations.Test;
 public class TestRunner {
     private static final Logger logger = LoggerFactory.getLogger(TestRunner.class);
 
-    public void runTests(Class<? extends TestClass> testClass) {
+    public static void runTests(Class<? extends TestClass> testClass) {
         List<Method> beforeMethods = new ArrayList<>();
         List<Method> tests = new ArrayList<>();
         List<Method> afterMethods = new ArrayList<>();
@@ -24,7 +24,7 @@ public class TestRunner {
         printResult(successTests, tests);
     }
 
-    private void printResult(int successTests, List<Method> allTests) {
+    private static void printResult(int successTests, List<Method> allTests) {
         logger.info(
                 "Вызвано тестов - {}, из них успешно - {}, с ошибкой - {}",
                 allTests.size(),
@@ -32,7 +32,7 @@ public class TestRunner {
                 allTests.size() - successTests);
     }
 
-    private void createMethods(
+    private static void createMethods(
             Class<? extends TestClass> testClass,
             List<Method> beforeMethods,
             List<Method> tests,
@@ -52,7 +52,7 @@ public class TestRunner {
         }
     }
 
-    private int executeTests(
+    private static int executeTests(
             Class<? extends TestClass> testClass,
             List<Method> beforeMethods,
             List<Method> tests,

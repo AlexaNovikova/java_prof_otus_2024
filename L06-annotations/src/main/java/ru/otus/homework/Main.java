@@ -6,8 +6,7 @@ import ru.otus.homework.test.TestRunner;
 
 public class Main {
     public static void main(String[] args) {
-        TestRunner testRunner = new TestRunner();
-        testRunner.runTests(MyIntCalculatorTests.class);
-        testRunner.runTests(SimpleTests.class);
+        TestRunner.runTests(MyIntCalculatorTests.class);
+        TestRunner.runTests(SimpleTests.class);
     }
 }
