@@ -1,12 +1,11 @@
 package ru.otus.annotations.usage;
 
+import java.util.ArrayList;
+import java.util.List;
 import ru.otus.annotations.NonEmpty;
 import ru.otus.annotations.Unfinished;
 import ru.otus.annotations.inheritance.Email;
 import ru.otus.annotations.inheritance.Immutable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings({
     "ResultOfMethodCallIgnored",
