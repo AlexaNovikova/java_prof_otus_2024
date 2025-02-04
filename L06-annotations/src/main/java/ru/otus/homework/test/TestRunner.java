@@ -15,21 +15,12 @@ import ru.otus.homework.annotations.Test;
 public class TestRunner {
     private static final Logger logger = LoggerFactory.getLogger(TestRunner.class);
 
-    public static void runTests(Class<? extends TestClass> testClass) {
+    public static TestResult runTests(Class<? extends TestClass> testClass) {
         List<Method> beforeMethods = new ArrayList<>();
         List<Method> tests = new ArrayList<>();
         List<Method> afterMethods = new ArrayList<>();
         createMethods(testClass, beforeMethods, tests, afterMethods);
-        int successTests = executeTests(testClass, beforeMethods, tests, afterMethods);
-        printResult(successTests, tests);
-    }
-
-    private static void printResult(int successTests, List<Method> allTests) {
-        logger.info(
-                "Вызвано тестов - {}, из них успешно - {}, с ошибкой - {}",
-                allTests.size(),
-                successTests,
-                allTests.size() - successTests);
+        return executeTests(testClass, beforeMethods, tests, afterMethods);
     }
 
     private static void createMethods(
@@ -52,12 +43,12 @@ public class TestRunner {
         }
     }
 
-    private static int executeTests(
+    private static TestResult executeTests(
             Class<? extends TestClass> testClass,
             List<Method> beforeMethods,
             List<Method> tests,
             List<Method> afterMethods) {
-        int failed = 0;
+        TestResult testResult = new TestResult();
         for (Method method : tests) {
             try {
                 Constructor<? extends TestClass> constructor = testClass.getConstructor();
@@ -67,8 +58,9 @@ public class TestRunner {
                 }
                 try {
                     method.invoke(test);
+                    testResult.addMethodResult(method, true);
                 } catch (Exception e) {
-                    failed++;
+                    testResult.addMethodResult(method, false);
                 }
                 for (Method method1 : afterMethods) {
                     method1.invoke(test);
@@ -80,6 +72,6 @@ public class TestRunner {
                 throw new RuntimeException(e);
             }
         }
-        return tests.size() - failed;
+        return testResult;
     }
 }
