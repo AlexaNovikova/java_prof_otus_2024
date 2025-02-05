@@ -1,11 +1,13 @@
 docker run hello-world
 docker stats
 ------
-docker run --rm --name rest-service \
--p 8080:8080 \
---network="host" \
+docker run --rm --name rest-service
+-p 8080:8080
+--network="host"
 registry.gitlab.com/petrelevich/dockerregistry/rest-hello:5.0.0
 
+----------------------------------------
+docker run --rm --name rest-service -p 8080:8080 --network="host" registry.gitlab.com/learndocker9560306/testdocker:0.0.0-21.20
 --------------------------
 docker run --rm --name rest-service \
 --memory=512m \
