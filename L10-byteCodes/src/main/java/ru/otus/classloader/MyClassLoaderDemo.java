@@ -1,13 +1,14 @@
 package ru.otus.classloader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MyClassLoaderDemo {
     private static final Logger logger = LoggerFactory.getLogger(MyClassLoaderDemo.class);
