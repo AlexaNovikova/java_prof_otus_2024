@@ -1,14 +1,13 @@
 package ru.otus.classloader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MyClassLoaderDemo {
     private static final Logger logger = LoggerFactory.getLogger(MyClassLoaderDemo.class);
@@ -41,9 +40,9 @@ public class MyClassLoaderDemo {
         }
 
         String getFileName(String className) {
-                        return "myClass" + File.separator + className.substring(className.lastIndexOf('.') + 1)
-                                + ".class";
-//            return "C:\\Users\\alexa\\IdeaProjects\\otus_java_2024_12\\L10-byteCodes\\myClass\\ClassForLoading.class";
+            return "myClass" + File.separator + className.substring(className.lastIndexOf('.') + 1) + ".class";
+            //            return
+            // "C:\\Users\\alexa\\IdeaProjects\\otus_java_2024_12\\L10-byteCodes\\myClass\\ClassForLoading.class";
         }
     }
 }
