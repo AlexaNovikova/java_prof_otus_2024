@@ -7,9 +7,9 @@ docker run --rm --name rest-service
 registry.gitlab.com/petrelevich/dockerregistry/rest-hello:5.0.0
 
 ----------------------------------------
-docker run --rm --name rest-service -p 8080:8080 --network="host" registry.gitlab.com/learndocker9560306/testdocker:0.0.0-21.20
+docker run --rm --name rest-service --network="host" -p 8080:8080  registry.gitlab.com/learndocker9560306/testdocker:0.0.0-21.20d95aff-SNAPSHOT
 --------------------------
-docker run --rm --name rest-service \
+docker run --rm --name rest-service
 --memory=512m \
 --cpus 2 \
 -p 8080:8080 \
