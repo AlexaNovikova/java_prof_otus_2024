@@ -39,3 +39,5 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("L10-byteCodes:homework")
+findProject(":L10-byteCodes:homework")?.name = "homework"
