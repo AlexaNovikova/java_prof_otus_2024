@@ -1,5 +1,7 @@
 package ru.otus;
 
+import ru.otus.annotations.Log;
+
 public class TestLogging implements TestLoggingInterface {
 
     @Override

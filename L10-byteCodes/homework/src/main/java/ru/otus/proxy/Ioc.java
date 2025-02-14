@@ -1,18 +1,21 @@
-package ru.otus;
+package ru.otus.proxy;
 
 import java.lang.reflect.*;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.annotations.Log;
 import ru.otus.utils.ReflectionHelper;
 
-class Ioc {
+public class Ioc {
     private static final Logger logger = LoggerFactory.getLogger(Ioc.class);
 
     private Ioc() {}
 
-    static <T> T createClass(Class<? extends T> clazz) {
-        InvocationHandler handler = new TestInvocationHandler<>(ReflectionHelper.newInstance(clazz));
+    @SuppressWarnings("unchecked")
+    public static <T> T createClass(Class<? extends T> clazz) {
+        var classInstance = ReflectionHelper.newInstance(clazz);
+        var handler = new TestInvocationHandler<>(classInstance);
         return (T) Proxy.newProxyInstance(Ioc.class.getClassLoader(), clazz.getInterfaces(), handler);
     }
 
