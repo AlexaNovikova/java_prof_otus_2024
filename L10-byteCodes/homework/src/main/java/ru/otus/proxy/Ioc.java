@@ -33,12 +33,12 @@ public class Ioc {
             for (Method method : methods) {
                 if (Arrays.stream(method.getAnnotations())
                         .anyMatch(a -> a.annotationType().equals(Log.class))) {
-                    methodsWithLogAnnotationSet.add(createMethodSignature(method));
+                    methodsWithLogAnnotationSet.add(getMethodSignature(method));
                 }
             }
         }
 
-        private String createMethodSignature(Method method) {
+        private String getMethodSignature(Method method) {
             return method.getName() + Arrays.toString(method.getParameters());
         }
 
@@ -60,7 +60,7 @@ public class Ioc {
         }
 
         private boolean isMethodAnnotated(Method method) {
-            return methodsWithLogAnnotationSet.contains(createMethodSignature(method));
+            return methodsWithLogAnnotationSet.contains(getMethodSignature(method));
         }
 
         @Override
