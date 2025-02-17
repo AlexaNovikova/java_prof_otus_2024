@@ -33,14 +33,18 @@ public class Ioc {
             for (Method method : methods) {
                 if (Arrays.stream(method.getAnnotations())
                         .anyMatch(a -> a.annotationType().equals(Log.class))) {
-                    methodsWithLogAnnotationSet.add(method.getName() + Arrays.toString(method.getParameters()));
+                    methodsWithLogAnnotationSet.add(createMethodSignature(method));
                 }
             }
         }
 
+        private String createMethodSignature(Method method) {
+            return method.getName() + Arrays.toString(method.getParameters());
+        }
+
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            if (methodsWithLogAnnotationSet.contains(method.getName() + Arrays.toString(method.getParameters()))) {
+            if (isMethodAnnotated(method)) {
                 StringBuilder sb = new StringBuilder();
                 Parameter[] parameters = method.getParameters();
                 for (int i = 0; i < parameters.length; i++) {
@@ -53,6 +57,10 @@ public class Ioc {
                 logger.info("executed method: {}, {}", method.getName(), sb.substring(0, sb.length() - 2));
             }
             return method.invoke(testClass, args);
+        }
+
+        private boolean isMethodAnnotated(Method method) {
+            return methodsWithLogAnnotationSet.contains(createMethodSignature(method));
         }
 
         @Override
