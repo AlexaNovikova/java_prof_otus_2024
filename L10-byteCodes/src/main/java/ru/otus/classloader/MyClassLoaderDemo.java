@@ -41,9 +41,9 @@ public class MyClassLoaderDemo {
         }
 
         String getFileName(String className) {
-                        return "myClass" + File.separator + className.substring(className.lastIndexOf('.') + 1)
-                                + ".class";
-//            return "C:\\Users\\alexa\\IdeaProjects\\otus_java_2024_12\\L10-byteCodes\\myClass\\ClassForLoading.class";
+            return "myClass" + File.separator + className.substring(className.lastIndexOf('.') + 1) + ".class";
+            //            return
+            // "C:\\Users\\alexa\\IdeaProjects\\otus_java_2024_12\\L10-byteCodes\\myClass\\ClassForLoading.class";
         }
     }
 }
