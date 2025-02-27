@@ -17,6 +17,14 @@ include("L08-gc:homework")
 
 include("L09-docker")
 include("L10-byteCodes")
+include("L11-Java8")
+
+include("L12-solid")
+
+include("L13-creationalPatterns")
+include("L14-behavioralPatterns")
+include("L15-structuralPatterns:demo")
+include("L15-structuralPatterns:homework")
 
 pluginManagement {
     val jgitver: String by settings
@@ -39,5 +47,3 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-include("L10-byteCodes:homework")
-findProject(":L10-byteCodes:homework")?.name = "homework"
