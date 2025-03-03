@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class AtmCellsCreatorImpl implements AtmCellsCreator {
 
-    public Map<Integer, AtmCell> createMap(List<Banknote> banknotes) {
+    public Map<Integer, AtmCell> createCells(List<Banknote> banknotes) {
         Map<Integer, AtmCell> atmCelMap = new HashMap<>();
         for (Banknote banknote : banknotes) {
             atmCelMap.put(banknote.getNominal(), createCell(banknote));

@@ -3,7 +3,6 @@ package ru.otus.homework.atm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ru.otus.homework.exceptions.AtmIssueBanknoteException;
 
 public class AtmMachineImpl implements AtmMachine {
 
@@ -12,12 +11,12 @@ public class AtmMachineImpl implements AtmMachine {
 
     public AtmMachineImpl(
             List<Banknote> banknotes, AtmCellsCreator atmCellsCreator, BanknotesCalculator banknotesCalculator) {
-        atmCellMap = atmCellsCreator.createMap(banknotes);
+        atmCellMap = atmCellsCreator.createCells(banknotes);
         this.banknotesCalculator = banknotesCalculator;
     }
 
     @Override
-    public Map<Banknote, Integer> giveBanknotes(double sum) throws AtmIssueBanknoteException {
+    public Map<Banknote, Integer> giveBanknotes(double sum) {
         return banknotesCalculator.giveBanknotesFromAtmCellsMap(atmCellMap, sum);
     }
 
