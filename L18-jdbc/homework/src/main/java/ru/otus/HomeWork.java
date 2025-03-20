@@ -1,5 +1,6 @@
 package ru.otus;
 
+import java.util.List;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
@@ -11,9 +12,7 @@ import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Manager;
 import ru.otus.crm.service.DbServiceClientImpl;
 import ru.otus.crm.service.DbServiceManagerImpl;
-import ru.otus.jdbc.mapper.DataTemplateJdbc;
-import ru.otus.jdbc.mapper.EntityClassMetaData;
-import ru.otus.jdbc.mapper.EntitySQLMetaData;
+import ru.otus.jdbc.mapper.*;
 
 @SuppressWarnings({"java:S125", "java:S1481"})
 public class HomeWork {
@@ -31,13 +30,19 @@ public class HomeWork {
         var dbExecutor = new DbExecutorImpl();
 
         // Работа с клиентом
-        EntityClassMetaData<Client> entityClassMetaDataClient; // = new EntityClassMetaDataImpl();
-        EntitySQLMetaData entitySQLMetaDataClient = null; // = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
+        EntityClassMetaData<Client> entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
+        EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl<>(entityClassMetaDataClient);
         var dataTemplateClient = new DataTemplateJdbc<Client>(
-                dbExecutor, entitySQLMetaDataClient); // реализация DataTemplate, универсальная
+                dbExecutor,
+                entitySQLMetaDataClient,
+                entityClassMetaDataClient); // реализация DataTemplate, универсальная
 
         // Код дальше должен остаться
         var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
+
+        List<Client> allClients = dbServiceClient.findAll();
+        log.info("Clients list from db: {}", allClients);
+
         dbServiceClient.saveClient(new Client("dbServiceFirst"));
 
         var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
@@ -46,11 +51,25 @@ public class HomeWork {
                 .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
         log.info("clientSecondSelected:{}", clientSecondSelected);
 
+        clientSecondSelected.setName("SecondClientUpdated");
+        dbServiceClient.saveClient(clientSecondSelected);
+
+        // добавлена проверка на select all и update
+
+        var clientSecondSelectedAfterUpdate = dbServiceClient
+                .getClient(clientSecondSelected.getId())
+                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecondSelected.getId()));
+        log.info("clientSecondSelectedAfterUpdate:{}", clientSecondSelectedAfterUpdate);
+
+        List<Client> allClientsBAfterInsert = dbServiceClient.findAll();
+        log.info("Clients list from db: {}", allClientsBAfterInsert);
+
         // Сделайте тоже самое с классом Manager (для него надо сделать свою таблицу)
 
-        EntityClassMetaData<Manager> entityClassMetaDataManager; // = new EntityClassMetaDataImpl();
-        EntitySQLMetaData entitySQLMetaDataManager = null; // = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
-        var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager);
+        EntityClassMetaData<Manager> entityClassMetaDataManager = new EntityClassMetaDataImpl<>(Manager.class);
+        EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl<>(entityClassMetaDataManager);
+        var dataTemplateManager =
+                new DataTemplateJdbc<>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
 
         var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
         dbServiceManager.saveManager(new Manager("ManagerFirst"));
@@ -60,6 +79,15 @@ public class HomeWork {
                 .getManager(managerSecond.getNo())
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
         log.info("managerSecondSelected:{}", managerSecondSelected);
+
+        var managerThird = dbServiceManager.saveManager(new Manager("ManagerThird", "label2"));
+        var managerThirdSelected = dbServiceManager
+                .getManager(managerThird.getNo())
+                .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerThird.getNo()));
+        log.info("managerSecondSelected:{}", managerThirdSelected);
+
+        List<Manager> allManagers = dbServiceManager.findAll();
+        log.info("ManagersList list from db: {}", allManagers);
     }
 
     private static void flywayMigrations(DataSource dataSource) {

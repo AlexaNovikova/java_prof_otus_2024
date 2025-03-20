@@ -1,14 +1,30 @@
 package ru.otus.crm.model;
 
+import ru.otus.crm.annotations.Id;
+
 public class Manager {
+
+    @Id(columnName = "id")
     private Long no;
+
     private String label;
+
     private String param1;
 
     public Manager() {}
 
     public Manager(String label) {
         this.label = label;
+    }
+
+    public Manager(Long no, String label) {
+        this.no = no;
+        this.label = label;
+    }
+
+    public Manager(String label, String param1) {
+        this.label = label;
+        this.param1 = param1;
     }
 
     public Manager(Long no, String label, String param1) {
@@ -43,6 +59,6 @@ public class Manager {
 
     @Override
     public String toString() {
-        return "Manager{" + "no=" + no + ", label='" + label + '\'' + '}';
+        return "Manager{" + "no=" + no + ", label='" + label + '\'' + ", param1='" + param1 + '\'' + '}';
     }
 }
