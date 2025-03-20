@@ -3,6 +3,8 @@ package ru.otus.jdbc.mapper;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otus.crm.annotations.Id;
 
 public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
@@ -11,8 +13,9 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     private final String tableTitle;
     private final String idName;
     private final List<Field> fieldsWithoutId;
+    private final Logger logger = LoggerFactory.getLogger(EntitySQLMetaDataImpl.class);
 
-    public EntitySQLMetaDataImpl (EntityClassMetaData<T> entityClassMetaData) {
+    public EntitySQLMetaDataImpl(EntityClassMetaData<T> entityClassMetaData) {
         this.entityClassMetaData = entityClassMetaData;
         tableTitle = entityClassMetaData.getName();
         fieldsWithoutId = entityClassMetaData.getFieldsWithoutId();
@@ -21,8 +24,9 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
 
     @Override
     public String getSelectAllSql() {
-        System.out.println("select " + idName + ", " + allFieldsWithoutIdToString() + " from " + tableTitle);
-        return "select " + idName + ", " + allFieldsWithoutIdToString() + " from " + tableTitle;
+        String selectAllSql = "select " + idName + ", " + allFieldsWithoutIdToString() + " from " + tableTitle;
+        logger.info("Select all sql request: {}", selectAllSql);
+        return selectAllSql;
     }
 
     private String allFieldsWithoutIdToString() {
@@ -31,14 +35,18 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
 
     @Override
     public String getSelectByIdSql() {
-        return "select " + idName + ", " + allFieldsWithoutIdToString() + " from " + tableTitle + " where " + idName
-                + " = ?";
+        String selectByIdSql = "select " + idName + ", " + allFieldsWithoutIdToString() + " from " + tableTitle
+                + " where " + idName + " = ?";
+        logger.info("Select by Id sql request: {}", selectByIdSql);
+        return selectByIdSql;
     }
 
     @Override
     public String getInsertSql() {
-        return "insert into " + tableTitle + "(" + allFieldsWithoutIdToString() + ") values ("
+        String insertSql = "insert into " + tableTitle + "(" + allFieldsWithoutIdToString() + ") values ("
                 + generateStringQuestionsForInsert() + ")";
+        logger.info("Insert sql request: {}", insertSql);
+        return insertSql;
     }
 
     private String generateStringQuestionsForInsert() {
@@ -50,13 +58,17 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
 
     @Override
     public String getUpdateSql() {
-        return "update " + tableTitle + "  set " + allFieldsWithoutIdToString() + " = " + " where " + idName+" = ?";
+        String updateSql = "update " + tableTitle + "  set " + updateValues() + " where " + idName + " = ?";
+        logger.info("Update Sql request: {}", updateSql);
+        return updateSql;
     }
 
-    private String updateValues(){
+    private String updateValues() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < fieldsWithoutId.size(); i++) {
-            stringBuilder.append(fieldsWithoutId)
+            stringBuilder.append(fieldsWithoutId.get(i).getName());
+            stringBuilder.append(" = ?,");
         }
+        return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 }

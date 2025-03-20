@@ -30,17 +30,23 @@ public class ReflectionUtils {
         return Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
     }
 
-    public static <T> List<Object> getListOfFieldValues(T entity) {
+    public static <T> List<Object> getListOfFieldValues(T entity, boolean withIdField) {
         try {
             Field[] fields = entity.getClass().getDeclaredFields();
             List<Object> values = new ArrayList<>();
+            Field idField = null;
             for (Field field : fields) {
                 if (!field.isAnnotationPresent(Id.class)) {
                     field.setAccessible(true);
                     values.add(field.get(entity));
+                } else {
+                    idField = field;
                 }
             }
-            System.out.println(values);
+            if (withIdField && idField != null) {
+                idField.setAccessible(true);
+                values.add(idField.get(entity));
+            }
             return values;
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);

@@ -11,9 +11,8 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     private final Class<T> type;
 
-    @SuppressWarnings("unchecked")
-    public EntityClassMetaDataImpl(Class<T> type) {
-        this.type = type;
+    public EntityClassMetaDataImpl(Class<T> tClass) {
+        this.type = tClass;
     }
 
     @Override
