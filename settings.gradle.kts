@@ -39,7 +39,7 @@ include("L19-rdbms")
 include("L20-hibernate")
 
 include("L21-jpql:class-demo")
-include("L21-jpql:homework-template")
+include("L21-jpql:homework")
 
 
 pluginManagement {

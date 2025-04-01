@@ -17,6 +17,12 @@ public class Phone implements Cloneable {
     @Column(name = "number")
     private String number;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne()
+    @JoinColumn(name = "client_id")
+    private Client client;
+
     public Phone(Long id, String number) {
         this.id = id;
         this.number = number;

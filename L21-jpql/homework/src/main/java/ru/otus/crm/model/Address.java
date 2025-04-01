@@ -18,6 +18,11 @@ public class Address implements Cloneable {
     @Column(name = "street")
     private String street;
 
+    //    @EqualsAndHashCode.Exclude
+    //    @ToString.Exclude
+    //    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
+    //    private Client client;
+
     public Address(Long id, String street) {
         this.id = id;
         this.street = street;
