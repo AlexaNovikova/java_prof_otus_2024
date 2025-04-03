@@ -1,6 +1,4 @@
 rootProject.name = "java_prof_otus_2024"
-
-
 include("L01-gradle")
 
 include("L02-gradle2")
@@ -41,6 +39,7 @@ include("L20-hibernate")
 include("L21-jpql:class-demo")
 include("L21-jpql:homework")
 
+include("L22-cache")
 
 pluginManagement {
     val jgitver: String by settings
