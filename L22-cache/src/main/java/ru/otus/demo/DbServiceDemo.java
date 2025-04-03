@@ -39,13 +39,13 @@ public class DbServiceDemo {
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
         ///
 
-        var cacheMap = new WeakHashMap<Long, Client>();
+        var cacheMap = new WeakHashMap<String, Client>();
 
         var clientCache = new MyCache<>(cacheMap, new ArrayList<>());
 
-        HwListener<Long, Client> clientHwListener = new HwListener<Long, Client>() {
+        HwListener<String, Client> clientHwListener = new HwListener<String, Client>() {
             @Override
-            public void notify(Long key, Client value, String action) {
+            public void notify(String key, Client value, String action) {
                 log.info("key:{}, value:{}, action: {}", key, value, action);
             }
         };

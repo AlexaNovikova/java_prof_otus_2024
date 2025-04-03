@@ -14,12 +14,12 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     private final DataTemplate<Client> clientDataTemplate;
     private final TransactionManager transactionManager;
-    private final HwCache<Long, Client> clientHwCache;
+    private final HwCache<String, Client> clientHwCache;
 
     public DbServiceClientImpl(
             TransactionManager transactionManager,
             DataTemplate<Client> clientDataTemplate,
-            HwCache<Long, Client> clientHwCache) {
+            HwCache<String, Client> clientHwCache) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
         this.clientHwCache = clientHwCache;
@@ -38,13 +38,13 @@ public class DbServiceClientImpl implements DBServiceClient {
             log.info("updated client: {}", savedClient);
             return savedClient;
         });
-        clientHwCache.put(result.getId(), result);
+        clientHwCache.put(toKey(result.getId()), result);
         return result;
     }
 
     @Override
     public Optional<Client> getClient(long id) {
-        Client clientFromCache = clientHwCache.get(id);
+        Client clientFromCache = clientHwCache.get(toKey(id));
         if (clientFromCache != null) {
             return Optional.of(clientFromCache);
         }
@@ -55,7 +55,7 @@ public class DbServiceClientImpl implements DBServiceClient {
         });
         if (resultOptional.isPresent()) {
             Client client = resultOptional.get();
-            clientHwCache.put(client.getId(), client);
+            clientHwCache.put(toKey(client.getId()), client);
         }
         return resultOptional;
     }
@@ -67,5 +67,9 @@ public class DbServiceClientImpl implements DBServiceClient {
             log.info("clientList:{}", clientList);
             return clientList;
         });
+    }
+
+    private String toKey(Long id) {
+        return String.valueOf(id);
     }
 }
