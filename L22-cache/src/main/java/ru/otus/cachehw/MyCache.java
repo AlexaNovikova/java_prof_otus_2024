@@ -1,21 +1,22 @@
 package ru.otus.cachehw;
 
-import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MyCache<K, V> implements HwCache<K, V> {
 
-    private static final Logger log = LoggerFactory.getLogger(MyCache.class);
-
-    private final AbstractMap<K, V> cacheMap;
+    private final WeakHashMap<K, V> cacheMap;
 
     private final List<HwListener<K, V>> listenerList;
 
-    public MyCache(AbstractMap<K, V> cacheMap, List<HwListener<K, V>> listenerList) {
-        this.cacheMap = cacheMap;
-        this.listenerList = listenerList;
+    private static final Logger logger = LoggerFactory.getLogger(MyCache.class);
+
+    public MyCache() {
+        this.cacheMap = new WeakHashMap<>();
+        this.listenerList = new ArrayList<>();
     }
 
     @Override
@@ -31,7 +32,11 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     private void notifyListeners(K key, V value, CacheListenerMessage cacheListenerMessage) {
         for (HwListener<K, V> listener : listenerList) {
-            listener.notify(key, value, cacheListenerMessage.getMessage());
+            try {
+                listener.notify(key, value, cacheListenerMessage.getMessage());
+            } catch (Exception e) {
+                logger.error("Exception while notifying listener");
+            }
         }
     }
 

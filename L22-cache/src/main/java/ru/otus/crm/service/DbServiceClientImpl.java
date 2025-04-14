@@ -62,11 +62,15 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     @Override
     public List<Client> findAll() {
-        return transactionManager.doInReadOnlyTransaction(session -> {
-            var clientList = clientDataTemplate.findAll(session);
-            log.info("clientList:{}", clientList);
-            return clientList;
+        var clientList = transactionManager.doInReadOnlyTransaction(session -> {
+            var clientListFromDb = clientDataTemplate.findAll(session);
+            log.info("clientList:{}", clientListFromDb);
+            return clientListFromDb;
         });
+        for (Client client : clientList) {
+            clientHwCache.put(toKey(client.getId()), client);
+        }
+        return clientList;
     }
 
     private String toKey(Long id) {

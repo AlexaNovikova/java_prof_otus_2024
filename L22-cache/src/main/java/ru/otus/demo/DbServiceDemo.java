@@ -1,7 +1,5 @@
 package ru.otus.demo;
 
-import java.util.ArrayList;
-import java.util.WeakHashMap;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +37,7 @@ public class DbServiceDemo {
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
         ///
 
-        var cacheMap = new WeakHashMap<String, Client>();
-
-        var clientCache = new MyCache<>(cacheMap, new ArrayList<>());
+        var clientCache = new MyCache<String, Client>();
 
         HwListener<String, Client> clientHwListener = new HwListener<String, Client>() {
             @Override
