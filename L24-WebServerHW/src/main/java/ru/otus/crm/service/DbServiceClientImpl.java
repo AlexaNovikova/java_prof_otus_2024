@@ -29,13 +29,10 @@ public class DbServiceClientImpl implements DBServiceClient {
         var client = clientMapper.dtoToModel(clientDto);
         return transactionManager.doInTransaction(session -> {
             if (client.getId() == null) {
-                System.out.println("save");
                 var savedClient = clientDataTemplate.insert(session, client);
-                System.out.println("saved");
                 log.info("created client: {}", savedClient);
                 return clientMapper.modelToDto(savedClient);
             }
-            System.out.println("update");
             var savedClient = clientDataTemplate.update(session, client);
             log.info("updated client: {}", savedClient);
             return clientMapper.modelToDto(savedClient);
