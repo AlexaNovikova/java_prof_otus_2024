@@ -47,6 +47,7 @@ include("L23-redis:data-transformer")
 include("L23-redis:data-listener")
 
 include("L24-webServer")
+include("L24-WebServerHW")
 
 pluginManagement {
     val jgitver: String by settings
@@ -69,3 +70,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("WebServerHW")
