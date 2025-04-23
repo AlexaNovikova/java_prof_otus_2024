@@ -45,11 +45,6 @@ allprojects {
 
     val reflections: String by project
 
-    val sockjs: String by project
-    val stomp: String by project
-    val bootstrap: String by project
-    val springDocOpenapiUi: String by project
-
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
