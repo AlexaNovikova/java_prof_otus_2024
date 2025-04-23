@@ -49,6 +49,9 @@ include("L23-redis:data-listener")
 include("L24-webServer")
 include("L24-WebServerHW")
 
+include("L25-di:class-demo")
+include("L25-di:homework")
+
 pluginManagement {
     val jgitver: String by settings
     val dependencyManagement: String by settings
