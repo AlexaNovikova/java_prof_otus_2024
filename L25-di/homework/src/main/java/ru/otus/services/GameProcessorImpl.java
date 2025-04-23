@@ -7,7 +7,7 @@ import ru.otus.model.Player;
 
 public class GameProcessorImpl implements GameProcessor {
 
-    private static final String MSG_HEADER = "Проверка test of the multiplication table";
+    private static final String MSG_HEADER = "Knowledge test of the multiplication table";
     private static final String MSG_INPUT_BASE = "Enter a number from 1 to 10";
     private static final String MSG_RIGHT_ANSWER = "Correct\n";
     private static final String MSG_WRONG_ANSWER = "Error\n";
