@@ -52,6 +52,17 @@ include("L24-WebServerHW")
 include("L25-di:class-demo")
 include("L25-di:homework")
 
+
+include("L26-springBootMvc")
+
+include ("L27-websocket:websocket")
+include ("L27-websocket:messager")
+include ("L27-websocket:messager-starter")
+include ("L27-websocket:application")
+
+include ("L28-springDataJdbc")
+include("L28-springDataJdbcHW")
+
 pluginManagement {
     val jgitver: String by settings
     val dependencyManagement: String by settings
@@ -73,4 +84,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-include("WebServerHW")
+
