@@ -1,6 +1,7 @@
 package ru.otus.api.model;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 public class SensorData {
     private final LocalDateTime measurementTime;
@@ -32,4 +33,6 @@ public class SensorData {
                 + room + '\'' + ", value="
                 + value + '}';
     }
+
+    public static Comparator<SensorData> priorityComparator = Comparator.comparing(s -> s.measurementTime);
 }

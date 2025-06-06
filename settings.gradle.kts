@@ -68,7 +68,7 @@ include ("L29-threads")
 include ("L30-JMM")
 include ("L31-executors")
 include ("L32-concurrentCollections:ConcurrentCollections")
-include ("L32-concurrentCollections:QueueDemo")
+include ("L32-concurrentCollections:QueueHomeWork")
 
 pluginManagement {
     val jgitver: String by settings
