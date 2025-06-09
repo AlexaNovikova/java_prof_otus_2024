@@ -77,6 +77,7 @@ include ("L34-multiprocess:processes-demo")
 include ("L34-multiprocess:sockets-demo")
 include ("L34-multiprocess:rmi-demo")
 include ("L34-multiprocess:grpc-demo")
+include ("L34-multiprocess:homework")
 
 pluginManagement {
     val jgitver: String by settings
