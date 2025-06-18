@@ -92,6 +92,9 @@ include ("L38-webflux:client")
 include ("L38-webflux-chat:client-service")
 include ("L38-webflux-chat:datastore-service")
 
+include ("L38-webflux-chat-HW:client-service")
+include ("L38-webflux-chat-HW:datastore-service")
+
 pluginManagement {
     val jgitver: String by settings
     val dependencyManagement: String by settings
